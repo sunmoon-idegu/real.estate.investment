@@ -10,14 +10,16 @@ def get_payment(n, pv, fv, r):
 
     return pmt
 
-def get_payment_interest_sensitivity(n, pv, fv, min_r=0, max_r=10, grid=100):
+def get_payment_interest_sensitivity(n, pv, fv, min_r=0, max_r=10, grid=100, monthly_rent=None):
 
     r = np.linspace(min_r, max_r, grid)
     pmt = get_payment(n, pv, fv, r) 
 
     plt.plot(r, pmt)    
-    plt.xlabel("Interest Rate")
-    plt.ylabel("Monthly Payment")
+    if monthly_rent:
+        plt.hlines(monthly_rent, xmin=min_r, xmax=max_r, color="r")
+    plt.xlabel("Interest Rate (%)")
+    plt.ylabel("Monthly Payment (w)")
     plt.show()
 
     return r, pmt
